@@ -1,27 +1,35 @@
-class TreeNode(object):
-    def __init__(self, val=0, left=None, right=None):
+class TreeNode():
+    def __init__(self, val, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
 
 
-class Solution(object):
+class Solution():
     def isBalanced(self, root):
-        def height(node: TreeNode):
-            if not node:
-                return 0, True
-            left_height, balanced = height(node.left)
-            if not balanced:
-                return left_height, False
-            right_height, balanced = height(node.right)
-            if not balanced:
-                return right_height, False
+        if not root:
+            return True
 
-            return max(left_height, right_height) + 1, abs(left_height - right_height) < 2
+        self.answer = True
 
-        _, balanced = height(root)
-        return balanced
+        def count(root):
+            left, right = 0, 0
+
+            if root.left:
+                left += count(root.left)
+            if root.right:
+                right += count(root.right)
+            if abs(right - left) > 1:
+                self.answer = False
+
+            print(root.val, right, left)
+            return max(right, left) + 1
+
+        count(root)
+        return self.answer
 
 
 s = Solution()
-print(s.isBalanced(TreeNode(1, TreeNode(1), TreeNode(1, TreeNode(1)))))
+print(s.isBalanced(TreeNode(val=1,
+                            left=TreeNode(val=2, left=TreeNode(val=3, left=TreeNode(val=4), right=TreeNode(val=4)),
+                                          right=TreeNode(val=3)), right=TreeNode(val=2))))
