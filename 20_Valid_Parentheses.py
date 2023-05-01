@@ -1,19 +1,24 @@
-class Solution(object):
-    def isValid(self, s):
-        store = {"(": ")", "[": "]", "{": "}"}
+class Solution:
+    def isValid(self, s: str) -> bool:
+        map = {
+            "(": ")",
+            "[": "]",
+            "{": "}"
+        }
         stack = []
-        for r in s:
-            if r in store:
-                stack.append(store[r])
+
+        for p in s:
+            if p in map:
+                stack.append(map[p])
             else:
-                if len(stack) == 0 or stack.pop(-1) != r:
+                if len(stack) == 0 or stack.pop(-1) != p:
                     return False
 
         if len(stack) != 0:
             return False
-        else:
-            return True
+
+        return True
 
 
 s = Solution()
-print(s.isValid("([{((}])"))
+print(s.isValid("()"))
