@@ -7,27 +7,24 @@ class ListNode(object):
 
 class Solution(object):
     def mergeTwoLists(self, list1, list2):
-        """
-        :type list1: Optional[ListNode]
-        :type list2: Optional[ListNode]
-        :rtype: Optional[ListNode]
-        """
         if list2 is None:
             return list1
 
         while list1:
-            ext = False
-            ptr = list2
+            box = list2
+            run = True
 
-            while not ext:
-                if list1.val < ptr.val:
-                    ptr.next = ListNode(val=ptr.val, next=ptr.next)
-                    ptr.val = list1.val
-                    ext = True
-                elif ptr.next is None:
-                    ptr.next = ListNode(val=list1.val)
-                    ext = True
-                ptr = ptr.next
+            while run and list1 and box:
+                if list1.val < box.val:
+                    box.next = ListNode(val=box.val, next=box.next)
+                    box.val = list1.val
+                    run = False
+
+                if box.next is None:
+                    box.next = ListNode(val=list1.val)
+                    run = False
+
+                box = box.next
 
             list1 = list1.next
 
@@ -35,7 +32,11 @@ class Solution(object):
 
 
 s = Solution()
-print(s.mergeTwoLists(
-    ListNode(val=1, next=ListNode(val=2, next=ListNode(val=4))),
+res = s.mergeTwoLists(
+    ListNode(val=2, next=ListNode(val=2, next=ListNode(val=4))),
     ListNode(val=1, next=ListNode(val=3, next=ListNode(val=4)))
-))
+)
+
+while res:
+    print(res.val)
+    res = res.next
