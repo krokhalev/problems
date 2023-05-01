@@ -1,9 +1,6 @@
-import time
-
 class Solution:
     def climbStairs(self, n: int) -> int:  # dynamic programming
         one, two = 1, 1
-        time.sleep(0.1)
 
         for i in range(n - 1):
             tmp = one
