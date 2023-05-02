@@ -7,29 +7,20 @@ class TreeNode(object):
 
 class Solution(object):
     def isSymmetric(self, root):
-        queue = [root]
-        while queue:
-            values = []
-            for i in queue:
-                if i is not None:
-                    values.append(i.val)
-                else:
-                    values.append(None)
-            if values != values[::-1]:
-                return False
+        def checkLeft(leftTree):
+            if leftTree:
+                return [leftTree.val] + checkLeft(leftTree.left) + checkLeft(leftTree.right)
+            return [None]
 
-            new_queue = []
-            for i in queue:
-                if i is not None:
-                    for child in (i.left, i.right):
-                        new_queue.append(child)
-            queue = new_queue
+        def checkRight(rightTree):
+            if rightTree:
+                return [rightTree.val] + checkRight(rightTree.right) + checkRight(rightTree.left)
+            return [None]
 
-        return True
+        return checkLeft(root.left) == checkRight(root.right)
 
 
+n = TreeNode(val=1, left=TreeNode(val=2, left=None, right=TreeNode(val=3)),
+             right=TreeNode(val=2, left=None, right=TreeNode(val=3)))
 s = Solution()
-print(s.isSymmetric(
-    TreeNode(val=1, left=TreeNode(val=2, left=TreeNode(val=3), right=TreeNode(val=4)),
-                    right=TreeNode(val=2, left=TreeNode(val=4), right=TreeNode(val=3))),
-))
+print(s.isSymmetric(n))
