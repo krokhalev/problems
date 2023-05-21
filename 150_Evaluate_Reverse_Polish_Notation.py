@@ -1,30 +1,22 @@
 class Solution:
     def evalRPN(self, tokens: list[str]) -> int:
-        res = 0
-        operators = ["+", "-", "*", "/"]
+        stack = []
 
-        index = 0
-        while True:
-            if index < len(tokens):
-                if tokens[index] in operators:
-                    if tokens[index - 2] not in operators and tokens[index - 1] not in operators:
-                        if tokens[index] == "+":
-                            res = int(tokens[index - 2]) + int(tokens[index - 1])
-                        if tokens[index] == "-":
-                            res = int(tokens[index - 2]) - int(tokens[index - 1])
-                        if tokens[index] == "*":
-                            res = int(tokens[index - 2]) * int(tokens[index - 1])
-                        if tokens[index] == "/":
-                            res = int(int(tokens[index - 2]) / int(tokens[index - 1]))
-
-                        tokens = tokens[:index - 2] + [str(res)] + tokens[index + 1:]
-                    index = 0
+        for t in tokens:
+            if t == "+":
+                stack.append(stack.pop() + stack.pop())
+            elif t == "-":
+                a, b = stack.pop(), stack.pop()
+                stack.append(b - a)
+            elif t == "*":
+                stack.append(stack.pop() * stack.pop())
+            elif t == "/":
+                a, b = stack.pop(), stack.pop()
+                stack.append(int(b / a))
             else:
-                break
+                stack.append(int(t))
 
-            index += 1
-
-        return int(tokens[-1])
+        return stack[0]
 
 
 s = Solution()
