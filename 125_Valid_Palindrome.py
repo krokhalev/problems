@@ -7,19 +7,24 @@ class Solution:
             else:
                 continue
 
-        if len(res) % 2 != 0:
-            left = res[(len(res)//2)+1:]
-            right = res[:len(res)//2][::-1]
-            if left == right:
-                return True
+        if len(res) in [0, 1]:
+            return True
+
+        if len(res) % 2 == 0:
+            for i in range(len(res)):
+                if res[i] != res[-i - 1]:
+                    return False
+                if i == (len(res) / 2) - 1:
+                    return True
         else:
-            left = res[len(res)//2:]
-            right = res[:len(res)//2][::-1]
-            if left == right:
-                return True
+            for i in range(len(res)):
+                if res[i] != res[-i - 1]:
+                    return False
+                if i == ((len(res) - 1) / 2) - 1:
+                    return True
 
         return False
 
 
 s = Solution()
-print(s.isPalindrome("race a car"))
+print(s.isPalindrome("."))
