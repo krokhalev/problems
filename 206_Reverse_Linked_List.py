@@ -5,32 +5,18 @@ class ListNode(object):
         self.next = next
 
 
-class Solution(object):
-    def reverseList(self, head):
-        """
-        :type head: ListNode
-        :rtype: ListNode
-        """
+class Solution:
+    def reverseList(self, head) -> list:
+        curr = head
+        prev = None
 
-        arr = []
-        while head:
-            arr.append(head.val)
-            head = head.next
-        reverse_arr = arr
-        reverse_arr.reverse()
+        while curr:
+            tmp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = tmp
 
-        root = None
-        for elem in reverse_arr:
-            box = ListNode(val=elem)
-
-            if root is None:
-                root = box
-            else:
-                prt = root
-                while prt.next is not None:
-                    prt = prt.next
-                prt.next = box
-        return root
+        return prev
 
 
 s = Solution()
