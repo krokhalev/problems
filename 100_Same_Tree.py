@@ -5,13 +5,14 @@ class TreeNode(object):
         self.right = right
 
 
-class Solution(object):
-    def isSameTree(self, p, q):
+class Solution:
+    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
         if not p and not q:
             return True
-        if (not q or not p) or (p.val != q.val):
+        if p and q and p.val == q.val:
+            return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        else:
             return False
-        return self.isSameTree(p.right, q.right) and self.isSameTree(p.left, q.left)
 
 
 s = Solution()
